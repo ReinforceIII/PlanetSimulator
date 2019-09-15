@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec3 vPosition;
+attribute vec4 vColor;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+
+varying vec4 fColor;
+
+void
+main()
+{
+    gl_Position = uPMatrix * uMVMatrix * vec4(vPosition, 1.0);
+    fColor = vColor;
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+
+varying vec4 fColor;
+void
+main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="Axis.js"></script>
+<script type="text/javascript" src="planet.js"></script>
+
+<head>
+<meta charset="utf-8">
+<title>Planet Simulator</title>
+</head>
+<body>
+<table>
+	<tr>
+		<td>
+		<div>
+		<canvas id="gl-canvas" width="1024" height="690"
+		Oops ... your browser doesn't support the HTML5 canvas element
+		</canvas>
+		</div>
+		<div>
+		<button id= "btn_stop">정지</button>
+		<button id= "btn_start">시작</button>
+		<button id= "show_axis">축 보이기</button>
+		<button id= "change_camera">카메라 화면 전환</button>
+		<br>
+		</div>
+		
+		<div>
+		지구 공전 속도 : slow<input id="EarthRevolutionTime" type="range"
+		min="15" max="60" step="1" value="30" />fast
+		</div>
+		<div>
+		명왕성 공전 속도 : slow<input id="PlutoRevolutionTime" type="range"
+		min="3.25" max="15" step="0.25" value="7.5" />fast
+		</div>
+		<div>
+		인공위성 공전 속도 : slow<input id="SatelliteRevolutionTime" type="range"
+		min="60" max="240" step="10" value="120" />fast
+		</div>
+		</td>
+		
+		<td>
+		태양 = 붉은 계열의 6면체 <br>
+		지구 = 파란 계열의 8면체 (보라색 부분이 한국)<br>
+		인공위성 = 초록색 4면체 <br>
+		명왕성 = 하얀 계열의 4각뿔 <br><br>
+		1번화면 = 전체 조형도 (좌상단)<br>
+		2번화면 = 태양에서 12시방향으로 보는 카메라 (우상단)<br>
+		3번화면 = 지구(한국)에서 밖을 보는 카메라 (좌하단)<br>
+		4번화면 = 명왕성에서 지구만 보는 카메라 (우하단) <br>
+		카메라 화면 전환 버튼 클릭시 4분할 화면->1->2->3->4 순으로 돌아감
+		</td>
+	</tr>
+</table>
+</body>
+</html>
